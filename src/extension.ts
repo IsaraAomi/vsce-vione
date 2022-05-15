@@ -54,20 +54,12 @@ class ImagesViewProvider implements vscode.WebviewViewProvider {
 	private _getHtmlForWebview(webview: vscode.Webview) {
 		// Get the local path to main script run in the webview, then convert it to a uri we can use in the webview.
 		const scriptUri = webview.asWebviewUri(vscode.Uri.joinPath(this._extensionUri, 'media', 'main.js'));
-
-		// Do the same for the stylesheet.
-		const styleUpdateUri = webview.asWebviewUri(vscode.Uri.joinPath(this._extensionUri, 'media', 'update.css'));
 		
 		// Use a nonce to only allow a specific script to be run.
 		const nonce = getNonce();
 		
 		return `<!DOCTYPE html>
 			<html lang="en">
-			<head>	
-				<meta charset="UTF-8">
-				<meta name="viewport" content="width=device-width, initial-scale=1.0">
-				<link href="${styleUpdateUri}" rel="stylesheet">
-			</head>
 			<body>
 				<img id="image_0"></img>				
 				<script nonce="${nonce}" src="${scriptUri}"></script>

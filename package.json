@@ -29,7 +29,7 @@
 				"command": "updateImage",
 				"category": "My Favorite Image",
 				"title": "Update Image",
-				"icon": "$(clear-all)"
+				"icon": "$(sync)"
 			}
 		],
 		"menus": {
