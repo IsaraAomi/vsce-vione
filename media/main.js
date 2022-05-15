@@ -9,10 +9,11 @@
         'https://downloads.fanbox.cc/images/post/3802639/irk3hJmEJNmiT5AUU8pebQ4m.png',
         'https://downloads.fanbox.cc/images/post/3802639/xNc5Ai83w5ZwALhSIjh8E8y3.png'
     ];
+    const oldState = vscode.getState() || { image: images[0] };
 
-    var index = 0;
+    var image = oldState.image;
+    var index = images.indexOf(image);
     var elem = document.getElementById("image_0");
-    var image = images[index];
 
     setSource(image);
 
