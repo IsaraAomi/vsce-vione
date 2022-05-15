@@ -10,38 +10,34 @@
 		"Other"
 	],
 	"activationEvents": [
-		"onView:rurudoContainer1"
+		"onView:imageView",
+		"onCommand:updateImage"
 	],
 	"main": "./out/extension.js",
 	"contributes": {
+		"views": {
+			"explorer": [
+				{
+					"type": "webview",
+					"id": "imageView",
+					"name": "My Favorite Image"
+				}
+			]
+		},
 		"commands": [
 			{
-				"command": "rurudoContainer1.show",
-				"title": "Show"
+				"command": "updateImage",
+				"category": "My Favorite Image",
+				"title": "Update Image",
+				"icon": "$(clear-all)"
 			}
 		],
 		"menus": {
-			"view/item/context": [
+			"view/title": [
 				{
-					"command": "rurudoContainer1.show",
-					"when": "view == rurudoContainer1"
-				}
-			]
-		},
-		"viewsContainers": {
-			"activitybar": [
-				{
-					"id": "rurudo-view",
-					"title": "Rurudo",
-					"icon": "data/sidebar_logo.svg"
-				}
-			]
-		},
-		"views": {
-			"rurudo-view": [
-				{
-					"id": "rurudoContainer1",
-					"name": "Container1"
+					"command": "updateImage",
+					"group": "navigation",
+					"when": "view == imageView"
 				}
 			]
 		}
