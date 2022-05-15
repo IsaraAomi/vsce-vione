@@ -1,6 +1,6 @@
 # Rurudo Lion on VSCode Explorer
 
-## Reference & Guidelien
+## Reference & Guideline
 - [るるどらいおんガイドライン](https://www.fanbox.cc/@rurudot/posts/3802639)
 
 ## Developer's Note
