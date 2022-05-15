@@ -6,16 +6,16 @@
     // @ts-ignore
     const vscode = acquireVsCodeApi();
     const oldState = vscode.getState();
-    const imageURLs = [
+    const images = [
         'https://downloads.fanbox.cc/images/post/3802639/irk3hJmEJNmiT5AUU8pebQ4m.png',
         'https://downloads.fanbox.cc/images/post/3802639/xNc5Ai83w5ZwALhSIjh8E8y3.png'
     ];
 
-    var imageURL = oldState.imageURL;
-    var index = imageURLs.indexOf(imageURL);
+    var image = oldState.image;
+    var index = images.indexOf(image);
     var elem = document.getElementById("image_0");
 
-    updateURLList(imageURL);
+    setSource(image);
 
     // Handle messages sent from the extension to the webview
     window.addEventListener('message', event => {
@@ -23,7 +23,7 @@
         switch (message.type) {
             case 'updateImage':
                 {
-                    nextURLList(imageURL)
+                    updateImage(image);
                     break;
                 }
 
@@ -31,25 +31,25 @@
     });
 
     /**
-     * @param {string} imageURL
+     * @param {string} image
      */
-    function updateURLList(imageURL) {
+    function setSource(image) {
         // @ts-ignore
-        elem.src = imageURL;
-        vscode.setState({ imageURL: imageURL });
+        elem.src = image;
+        vscode.setState({ image: image });
     }
 
     /**
-     * @param {any} imageURL
+     * @param {any} image
      */
-    function nextURLList(imageURL) {
-        if (index >= imageURLs.length - 1) {
+    function updateImage(image) {
+        if (index >= images.length - 1) {
             index = 0;
         } else {
             index += 1;
         }
-        imageURL = imageURLs[index];
-        updateURLList(imageURL);
+        image = images[index];
+        setSource(image);
     }
 }());
 
