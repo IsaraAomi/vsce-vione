@@ -10,16 +10,41 @@
 		"Other"
 	],
 	"activationEvents": [
-        "onCommand:vsce-rurudo.helloWorld"
+		"onView:rurudoContainer1"
 	],
 	"main": "./out/extension.js",
 	"contributes": {
 		"commands": [
 			{
-				"command": "vsce-rurudo.helloWorld",
-				"title": "Hello World"
+				"command": "rurudoContainer1.show",
+				"title": "Show"
 			}
-		]
+		],
+		"menus": {
+			"view/item/context": [
+				{
+					"command": "rurudoContainer1.show",
+					"when": "view == rurudoContainer1"
+				}
+			]
+		},
+		"viewsContainers": {
+			"activitybar": [
+				{
+					"id": "rurudo-view",
+					"title": "Rurudo",
+					"icon": "data/sidebar_logo.svg"
+				}
+			]
+		},
+		"views": {
+			"rurudo-view": [
+				{
+					"id": "rurudoContainer1",
+					"name": "Container1"
+				}
+			]
+		}
 	},
 	"scripts": {
 		"vscode:prepublish": "npm run compile",
