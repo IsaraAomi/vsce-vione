@@ -9,6 +9,18 @@
   - [How to Install](https://docs.microsoft.com/ja-jp/windows/dev-environment/javascript/nodejs-on-wsl)
 - npm: 8.8.0
 
+## Packaging
+- Package by npx:
+  ```
+  $ npx vsce package
+  ```
+
+## Installation to VSCode
+- Install the package as the following:
+  ```
+  code --install-extension vsce-rurudo-0.0.1.vsix
+  ```
+
 ---
 # vsce-rurudo README
 
