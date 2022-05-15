@@ -61,7 +61,7 @@ class ImagesViewProvider implements vscode.WebviewViewProvider {
 		return `<!DOCTYPE html>
 			<html lang="en">
 			<body>
-				<img id="image_0"></img>				
+				<img id="image_0"></img>
 				<script nonce="${nonce}" src="${scriptUri}"></script>
 			</body>
 			</html>`;

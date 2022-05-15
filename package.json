@@ -1,7 +1,7 @@
 {
   "name": "vsce-rurudo",
 	"displayName": "vsce-rurudo",
-	"description": "Visual Studio Code Extention of rurudo",
+	"description": "Rurudo Lion on VSCode Explorer",
 	"version": "0.0.1",
 	"engines": {
 		"vscode": "^1.67.0"
