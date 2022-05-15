@@ -1,4 +1,6 @@
 # Rurudo Lion on VSCode Explorer
+- This extension summons rurudo lion on VSCode's explorer.
+- You can choose between 2 types of rurudo lion.
 
 ## Reference & Guideline
 - [るるどらいおんガイドライン](https://www.fanbox.cc/@rurudot/posts/3802639)
