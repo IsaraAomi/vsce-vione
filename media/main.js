@@ -3,32 +3,27 @@
 // This script will be run within the webview itself
 // It cannot access the main VS Code APIs directly.
 (function () {
+    // @ts-ignore
     const vscode = acquireVsCodeApi();
+    const oldState = vscode.getState();
+    const imageURLs = [
+        'https://downloads.fanbox.cc/images/post/3802639/irk3hJmEJNmiT5AUU8pebQ4m.png',
+        'https://downloads.fanbox.cc/images/post/3802639/xNc5Ai83w5ZwALhSIjh8E8y3.png'
+    ];
 
-    const oldState = vscode.getState() || { colors: [] };
+    var imageURL = oldState.imageURL;
+    var index = imageURLs.indexOf(imageURL);
+    var elem = document.getElementById("image_0");
 
-    /** @type {Array<{ value: string }>} */
-    let colors = oldState.colors;
-
-    updateColorList(colors);
-
-    document.querySelector('.add-color-button').addEventListener('click', () => {
-        addColor();
-    });
+    updateURLList(imageURL);
 
     // Handle messages sent from the extension to the webview
     window.addEventListener('message', event => {
         const message = event.data; // The json data that the extension sent
         switch (message.type) {
-            case 'addColor':
+            case 'updateImage':
                 {
-                    addColor();
-                    break;
-                }
-            case 'clearColors':
-                {
-                    colors = [];
-                    updateColorList(colors);
+                    nextURLList(imageURL)
                     break;
                 }
 
@@ -36,64 +31,25 @@
     });
 
     /**
-     * @param {Array<{ value: string }>} colors
+     * @param {string} imageURL
      */
-    function updateColorList(colors) {
-        const ul = document.querySelector('.color-list');
-        ul.textContent = '';
-        for (const color of colors) {
-            const li = document.createElement('li');
-            li.className = 'color-entry';
-
-            const colorPreview = document.createElement('div');
-            colorPreview.className = 'color-preview';
-            colorPreview.style.backgroundColor = `#${color.value}`;
-            colorPreview.addEventListener('click', () => {
-                onColorClicked(color.value);
-            });
-            li.appendChild(colorPreview);
-
-            const input = document.createElement('input');
-            input.className = 'color-input';
-            input.type = 'text';
-            input.value = color.value;
-            input.addEventListener('change', (e) => {
-                const value = e.target.value;
-                if (!value) {
-                    // Treat empty value as delete
-                    colors.splice(colors.indexOf(color), 1);
-                } else {
-                    color.value = value;
-                }
-                updateColorList(colors);
-            });
-            li.appendChild(input);
-
-            ul.appendChild(li);
-        }
-
-        // Update the saved state
-        vscode.setState({ colors: colors });
-    }
-
-    /** 
-     * @param {string} color 
-     */
-    function onColorClicked(color) {
-        vscode.postMessage({ type: 'colorSelected', value: color });
+    function updateURLList(imageURL) {
+        // @ts-ignore
+        elem.src = imageURL;
+        vscode.setState({ imageURL: imageURL });
     }
 
     /**
-     * @returns string
+     * @param {any} imageURL
      */
-    function getNewCalicoColor() {
-        const colors = ['020202', 'f1eeee', 'a85b20', 'daab70', 'efcb99'];
-        return colors[Math.floor(Math.random() * colors.length)];
-    }
-
-    function addColor() {
-        colors.push({ value: getNewCalicoColor() });
-        updateColorList(colors);
+    function nextURLList(imageURL) {
+        if (index >= imageURLs.length - 1) {
+            index = 0;
+        } else {
+            index += 1;
+        }
+        imageURL = imageURLs[index];
+        updateURLList(imageURL);
     }
 }());
 

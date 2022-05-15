@@ -21,9 +21,6 @@ export function activate(context: vscode.ExtensionContext) {
 		}));
 }
 
-// this method is called when your extension is deactivated
-export function deactivate() {}
-
 class ColorsViewProvider implements vscode.WebviewViewProvider {
 
 	public static readonly viewType = 'imageView';
@@ -71,23 +68,15 @@ class ColorsViewProvider implements vscode.WebviewViewProvider {
 		
 		return `<!DOCTYPE html>
 			<html lang="en">
-			<head>
-			
-				<img src="${imagePath}"/>
-	
+			<head>	
 				<meta charset="UTF-8">
-				
-				<!--
-				Use a content security policy to only allow loading images from https or from our extension directory,
-				and only allow scripts that have a specific nonce.
-				-->
-				<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src ${webview.cspSource}; script-src 'nonce-${nonce}';">
-				
 				<meta name="viewport" content="width=device-width, initial-scale=1.0">
-			
 				<link href="${styleUpdateUri}" rel="stylesheet">
-
 			</head>
+			<body>
+				<img id="image_0"></img>				
+				<script nonce="${nonce}" src="${scriptUri}"></script>
+			</body>
 			</html>`;
 	}
 }
