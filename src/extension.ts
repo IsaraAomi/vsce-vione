@@ -7,16 +7,16 @@ import * as vscode from 'vscode';
 export function activate(context: vscode.ExtensionContext) {
 
 	// Explorer
-	const provider = new ColorsViewProvider(context.extensionUri);
+	const provider = new ImagesViewProvider(context.extensionUri);
 	context.subscriptions.push(
-		vscode.window.registerWebviewViewProvider(ColorsViewProvider.viewType, provider));
+		vscode.window.registerWebviewViewProvider(ImagesViewProvider.viewType, provider));
 	context.subscriptions.push(
 		vscode.commands.registerCommand('updateImage', () => {
 			provider.updateImage();
 		}));
 }
 
-class ColorsViewProvider implements vscode.WebviewViewProvider {
+class ImagesViewProvider implements vscode.WebviewViewProvider {
 
 	public static readonly viewType = 'imageView';
 
