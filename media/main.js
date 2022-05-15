@@ -5,15 +5,14 @@
 (function () {
     // @ts-ignore
     const vscode = acquireVsCodeApi();
-    const oldState = vscode.getState();
     const images = [
         'https://downloads.fanbox.cc/images/post/3802639/irk3hJmEJNmiT5AUU8pebQ4m.png',
         'https://downloads.fanbox.cc/images/post/3802639/xNc5Ai83w5ZwALhSIjh8E8y3.png'
     ];
 
-    var image = oldState.image;
-    var index = images.indexOf(image);
+    var index = 0;
     var elem = document.getElementById("image_0");
+    var image = images[index];
 
     setSource(image);
 
@@ -26,7 +25,6 @@
                     updateImage(image);
                     break;
                 }
-
         }
     });
 
