@@ -2,7 +2,7 @@ import * as vscode from 'vscode';
 
 export class RurudoContainer1Provider implements vscode.TreeDataProvider<RurudoContainer1TreeElement> {
 
-  private rootElements: RurudoContainer1TreeElement[]
+  private rootElements: RurudoContainer1TreeElement[];
   constructor() {
     this.rootElements = this.createElements();
   }
@@ -35,7 +35,7 @@ export class RurudoContainer1TreeElement {
 
 
   private _children: RurudoContainer1TreeElement[];
-  private _parent: RurudoContainer1TreeElement | undefined | null
+  private _parent: RurudoContainer1TreeElement | undefined | null;
   constructor(
     public name: string
   ) {
