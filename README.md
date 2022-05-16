@@ -19,11 +19,13 @@
 - node: 18.1.0
   - [How to Install](https://docs.microsoft.com/ja-jp/windows/dev-environment/javascript/nodejs-on-wsl)
 - npm: 8.8.0
+- tsc: 3.8.3
+  - `$ sudo apt install node-typescript`
 
 ### Packaging
 - Package by npx:
   ```
-  $ npx vsce package
+  $ ./packaging.sh
   ```
 
 ### Installation to VSCode
