@@ -2,6 +2,10 @@
 - This extension summons rurudo lion on VSCode's explorer.
 - You can choose between 2 types of rurudo lion.
 
+|Big ver.|Small ver.|
+|---|---|
+|![](media/vsce-rurudo_001.png)|![](media/vsce-rurudo_002.png)|
+
 ## Reference & Guideline
 - [るるどらいおんガイドライン](https://www.fanbox.cc/@rurudot/posts/3802639)
 
