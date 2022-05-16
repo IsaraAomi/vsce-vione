@@ -29,5 +29,5 @@
 ### Installation to VSCode
 - Install the package as the following:
   ```
-  $ code --install-extension vsce-vione-0.0.1.vsix
+  $ ./install.sh
   ```
