@@ -1,10 +1,8 @@
-# Rurudo Lion on VSCode Explorer
-- This extension summons rurudo lion on VSCode's explorer.
-- You can choose between 2 types of rurudo lion.
+# View Image on VSCode Explorer
+- This extension allows you to view images on VSCode's explorer.
 
-|Big ver.|Small ver.|
-|---|---|
-|![](media/vsce-rurudo_001.png)|![](media/vsce-rurudo_002.png)|
+![](media/vsce-vione_001.png)
+![](media/vsce-vione_002.png)
 
 ## Reference & Guideline
 - [るるどらいおんガイドライン](https://www.fanbox.cc/@rurudot/posts/3802639)
@@ -31,5 +29,5 @@
 ### Installation to VSCode
 - Install the package as the following:
   ```
-  $ code --install-extension vsce-rurudo-0.0.1.vsix
+  $ code --install-extension vsce-vione-0.0.1.vsix
   ```

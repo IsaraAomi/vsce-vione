@@ -1,7 +1,7 @@
 {
-  "name": "vsce-rurudo",
-	"displayName": "vsce-rurudo",
-	"description": "Rurudo Lion on VSCode Explorer",
+  "name": "vsce-vione",
+	"displayName": "View Image on VSCode Explorer",
+	"description": "View Image on VSCode Explorer",
 	"version": "0.0.1",
 	"engines": {
 		"vscode": "^1.67.0"
@@ -9,7 +9,7 @@
 	"license": "SEE LICENSE IN LICENSE.md",
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/IsaraAomi/vsce-rurudo"
+		"url": "https://github.com/IsaraAomi/vsce-vione"
 	},
 	"icon": "media/vsce_logo.png",
 	"categories": [
@@ -20,7 +20,26 @@
 		"onCommand:updateImage"
 	],
 	"main": "./out/extension.js",
+	"keywords": [
+		"multi-root ready"
+	],
 	"contributes": {
+		"configuration": [
+			{
+				"id": "imageList",
+				"title": "View Image on VSCode Explorer",
+				"properties": {
+					"conf.settingsEditor.uniqueEnumArraySetting": {
+						"type": "array",
+						"description": "List of your favorite images",
+						"items": {
+							"type": "string"
+						},
+						"uniqueItems": true
+					}
+				}
+			}
+		],
 		"views": {
 			"explorer": [
 				{

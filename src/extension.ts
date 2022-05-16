@@ -16,6 +16,9 @@ export function activate(context: vscode.ExtensionContext) {
 		}));
 }
 
+// This method is called when the extension is deactivated
+export const deactivate = () => {};
+
 class ImagesViewProvider implements vscode.WebviewViewProvider {
 
 	public static readonly viewType = 'imageView';
