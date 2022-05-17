@@ -28,7 +28,7 @@
 		"configuration": [
 			{
 				"id": "imageList",
-				"title": "Image List",
+				"title": "View Image on VSCode Explorer",
 				"properties": {
 					"vione.view.uniqueImageArray": {
 						"type": "array",

@@ -8,16 +8,12 @@
     const start_image = "https://github.com/IsaraAomi/vsce-vione/blob/master/media/setting_example_edit.png?raw=true"
     
     var images = [start_image];    
-    const oldState = vscode.getState() || { image: images[0], interval_time: 0 };
-    var interval_time = oldState.interval_time;
+    const oldState = vscode.getState() || { image: images[0] };
     var image = oldState.image;
     var index = images.indexOf(image);
     var elem = document.getElementById("image_0");
 
     setSource(image);
-
-    // var element = document.getElementById("sample");
-    // element.innerHTML = interval_time.toString();
 
     // Handle messages sent from the extension to the webview
     window.addEventListener('message', event => {
@@ -35,12 +31,6 @@
                     setSource(images[0]);
                     break;
                 }
-            case 'setTransitionTime':
-                {
-                    interval_time = message.time;
-                    // element.innerHTML = interval_time.toString();
-                    break;
-                }
         }
     });
 
@@ -56,7 +46,7 @@
             // @ts-ignore
             elem.src = start_image;
         }
-        vscode.setState({ image: image, interval_time: interval_time });
+        vscode.setState({ image: image });
     }
 
     /**

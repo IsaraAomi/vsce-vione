@@ -22,9 +22,9 @@ export function activate(context: vscode.ExtensionContext) {
 	context.subscriptions.push(
 		vscode.commands.registerCommand('nextImage', () => {
 			const images_list: any = vscode.workspace.getConfiguration().get('vione.view.uniqueImageArray');
-			const transition_time: any = vscode.workspace.getConfiguration().get('vione.view.transitionTime');
 			provider.nextImage(images_list);
-			provider.setTransitionTime(transition_time);
+			// const transition_time: any = vscode.workspace.getConfiguration().get('vione.view.transitionTime');
+			// provider.setTransitionTime(transition_time);
 			// console.log(transition_time);
 		}));
 		
@@ -36,11 +36,11 @@ export function activate(context: vscode.ExtensionContext) {
 			provider.updateImagesList(images_list);
 		}
 		// When change transition time
-		if (e.affectsConfiguration('vione.view.transitionTime')) {
-			const transition_time: any = vscode.workspace.getConfiguration().get('vione.view.transitionTime');
-			provider.setTransitionTime(transition_time);
-			// console.log(transition_time);
-		}
+		// if (e.affectsConfiguration('vione.view.transitionTime')) {
+		// 	const transition_time: any = vscode.workspace.getConfiguration().get('vione.view.transitionTime');
+		// 	provider.setTransitionTime(transition_time);
+		// 	// console.log(transition_time);
+		// }
 	}));
 }
 
@@ -88,11 +88,11 @@ class ImagesViewProvider implements vscode.WebviewViewProvider {
 		}
 	}
 
-	public setTransitionTime(transition_time: any) {
-		if (this._view) {
-			this._view.webview.postMessage({ type: 'setTransitionTime', time: transition_time });
-		}
-	}
+	// public setTransitionTime(transition_time: any) {
+	// 	if (this._view) {
+	// 		this._view.webview.postMessage({ type: 'setTransitionTime', time: transition_time });
+	// 	}
+	// }
 
 	private _getHtmlForWebview(webview: vscode.Webview) {
 		// Get the local path to main script run in the webview, then convert it to a uri we can use in the webview.
