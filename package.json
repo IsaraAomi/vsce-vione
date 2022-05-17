@@ -45,14 +45,14 @@
 				{
 					"type": "webview",
 					"id": "imageView",
-					"name": "My Favorite Image"
+					"name": "VIONE"
 				}
 			]
 		},
 		"commands": [
 			{
 				"command": "updateImage",
-				"category": "My Favorite Image",
+				"category": "VIONE",
 				"title": "Update Image",
 				"icon": "$(sync)"
 			}
