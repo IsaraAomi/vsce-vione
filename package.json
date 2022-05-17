@@ -17,7 +17,6 @@
 		"Other"
 	],
 	"activationEvents": [
-		// "onCommand:config.commands.setTransitionTime",
 		"onView:imageView",
 		"onCommand:nextImage"
 	],
@@ -27,17 +26,6 @@
 	],
 	"contributes": {
 		"configuration": [
-			// {
-			// 	"id": "transitionTime",
-			// 	"title": "Transition Time",
-			// 	"properties": {
-			// 		"vione.view.transitionTime": {
-			// 			"type": "number",
-			// 			"description": "Automatic transition time (seconds). '0' means this option is disabled.",
-			// 			"default": 0
-			// 		}
-			// 	}
-			// },
 			{
 				"id": "imageList",
 				"title": "Image List",
@@ -63,11 +51,6 @@
 			]
 		},
 		"commands": [
-			// {
-			// 	"category": "VIONE",
-			// 	"command": "config.commands.setTransitionTime",
-			// 	"title": "Set Transition Time"
-			// },
 			{
 				"command": "nextImage",
 				"category": "VIONE",
