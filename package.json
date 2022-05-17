@@ -17,9 +17,9 @@
 		"Other"
 	],
 	"activationEvents": [
+		// "onCommand:config.commands.setTransitionTime",
 		"onView:imageView",
-		"onCommand:nextImage",
-		// "onCommand:config.commands.setTransitionTime"
+		"onCommand:nextImage"
 	],
 	"main": "./out/extension.js",
 	"keywords": [
@@ -27,6 +27,17 @@
 	],
 	"contributes": {
 		"configuration": [
+			// {
+			// 	"id": "transitionTime",
+			// 	"title": "Transition Time",
+			// 	"properties": {
+			// 		"vione.view.transitionTime": {
+			// 			"type": "number",
+			// 			"description": "Automatic transition time (seconds). '0' means this option is disabled.",
+			// 			"default": 0
+			// 		}
+			// 	}
+			// },
 			{
 				"id": "imageList",
 				"title": "Image List",
@@ -40,18 +51,7 @@
 						"uniqueItems": true
 					}
 				}
-			},
-			// {
-			// 	"id": "transitionTime",
-			// 	"title": "Transition Time",
-			// 	"properties": {
-			// 		"vione.view.transitionTime": {
-			// 			"type": "number",
-			// 			"description": "Automatic transition time (seconds). '0' means this option is disabled.",
-			// 			"default": 0
-			// 		}
-			// 	}
-			// }
+			}
 		],
 		"views": {
 			"explorer": [
@@ -63,17 +63,17 @@
 			]
 		},
 		"commands": [
+			// {
+			// 	"category": "VIONE",
+			// 	"command": "config.commands.setTransitionTime",
+			// 	"title": "Set Transition Time"
+			// },
 			{
 				"command": "nextImage",
 				"category": "VIONE",
 				"title": "Next Image",
 				"icon": "$(sync)"
-			},
-			// {
-			// 	"category": "VIONE",
-			// 	"command": "config.commands.setTransitionTime",
-			// 	"title": "Set Transition Time"
-			// }
+			}
 		],
 		"menus": {
 			"view/title": [
