@@ -7,6 +7,7 @@
 		"vscode": "^1.67.0"
 	},
 	"license": "SEE LICENSE IN LICENSE.md",
+	"publisher": "IsaraCarousel",
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/IsaraAomi/vsce-vione"
