@@ -44,11 +44,6 @@
         }
     });
 
-
-    // if (interval_time > 0) {
-    //     nextImageLoop(images, interval_time);
-    // }
-
     /**
      * @param {string} image
      */
@@ -76,27 +71,6 @@
         image = images[index];
         setSource(image);
     }
-
-    // /**
-    //  * @param {number} time
-    //  */
-    // function sleep (time) {
-    //     return new Promise(resolve => {
-    //         setTimeout(resolve, time)
-    //     })
-    // }
-
-    // /**
-    //  * @param {string[]} images
-    //  * @param {any} interval_time
-    //  */
-    // async function nextImageLoop (images, interval_time) {
-    //     for (let i = 0; ; i++) {
-    //         element.innerHTML = i.toString();
-    //         nextImage(images);
-    //         await sleep(3000);
-    //     }
-    // }
 }());
 
 

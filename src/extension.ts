@@ -12,7 +12,7 @@ export function activate(context: vscode.ExtensionContext) {
 	context.subscriptions.push(
 		vscode.window.registerWebviewViewProvider(ImagesViewProvider.viewType, provider));
 
-	// Load configuration at first
+	// Load configuration at first (meaningless...)
 	// const images_list: any = vscode.workspace.getConfiguration().get('vione.view.uniqueImageArray');
 	// const transition_time: any = vscode.workspace.getConfiguration().get('vione.view.transitionTime');
 	// provider.updateImagesList(images_list);
