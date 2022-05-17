@@ -8,26 +8,46 @@
     const start_image = "https://github.com/IsaraAomi/vsce-vione/blob/master/media/setting_example_edit.png?raw=true"
     
     var images = [start_image];    
-    const oldState = vscode.getState() || { image: images[0] };
-
+    const oldState = vscode.getState() || { image: images[0], interval_time: 0 };
+    var interval_time = oldState.interval_time;
     var image = oldState.image;
     var index = images.indexOf(image);
     var elem = document.getElementById("image_0");
 
     setSource(image);
 
+    // var element = document.getElementById("sample");
+    // element.innerHTML = interval_time.toString();
+
     // Handle messages sent from the extension to the webview
     window.addEventListener('message', event => {
         const message = event.data; // The json data that the extension sent
         switch (message.type) {
-            case 'updateImage':
+            case 'nextImage':
                 {
                     images = message.images;
-                    updateImage(image, images);
+                    nextImage(images);
+                    break;
+                }
+            case 'updateImagesList':
+                {
+                    images = message.images;
+                    setSource(images[0]);
+                    break;
+                }
+            case 'setTransitionTime':
+                {
+                    interval_time = message.time;
+                    // element.innerHTML = interval_time.toString();
                     break;
                 }
         }
     });
+
+
+    // if (interval_time > 0) {
+    //     nextImageLoop(images, interval_time);
+    // }
 
     /**
      * @param {string} image
@@ -41,14 +61,13 @@
             // @ts-ignore
             elem.src = start_image;
         }
-        vscode.setState({ image: image });
+        vscode.setState({ image: image, interval_time: interval_time });
     }
 
     /**
-     * @param {string} image
      * @param {string[]} images
      */
-    function updateImage(image, images) {
+    function nextImage(images) {
         if (index >= images.length - 1) {
             index = 0;
         } else {
@@ -57,6 +76,27 @@
         image = images[index];
         setSource(image);
     }
+
+    // /**
+    //  * @param {number} time
+    //  */
+    // function sleep (time) {
+    //     return new Promise(resolve => {
+    //         setTimeout(resolve, time)
+    //     })
+    // }
+
+    // /**
+    //  * @param {string[]} images
+    //  * @param {any} interval_time
+    //  */
+    // async function nextImageLoop (images, interval_time) {
+    //     for (let i = 0; ; i++) {
+    //         element.innerHTML = i.toString();
+    //         nextImage(images);
+    //         await sleep(3000);
+    //     }
+    // }
 }());
 
 

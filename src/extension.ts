@@ -6,14 +6,42 @@ import * as vscode from 'vscode';
 // your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
 
-	// Webview
 	const provider = new ImagesViewProvider(context.extensionUri);
+
+	// Webview
 	context.subscriptions.push(
 		vscode.window.registerWebviewViewProvider(ImagesViewProvider.viewType, provider));
+
+	// Load configuration at first
+	// const images_list: any = vscode.workspace.getConfiguration().get('vione.view.uniqueImageArray');
+	// const transition_time: any = vscode.workspace.getConfiguration().get('vione.view.transitionTime');
+	// provider.updateImagesList(images_list);
+	// provider.setTransitionTime(transition_time);
+
+	// Push Next Image Button
 	context.subscriptions.push(
-		vscode.commands.registerCommand('updateImage', () => {
-			provider.updateImage();
+		vscode.commands.registerCommand('nextImage', () => {
+			const images_list: any = vscode.workspace.getConfiguration().get('vione.view.uniqueImageArray');
+			const transition_time: any = vscode.workspace.getConfiguration().get('vione.view.transitionTime');
+			provider.nextImage(images_list);
+			provider.setTransitionTime(transition_time);
+			// console.log(transition_time);
 		}));
+		
+	// Listen to configuration when they are changed
+	context.subscriptions.push(vscode.workspace.onDidChangeConfiguration(e => {
+		// When change image list
+		if (e.affectsConfiguration('vione.view.uniqueImageArray')) {
+			const images_list: any = vscode.workspace.getConfiguration().get('vione.view.uniqueImageArray');
+			provider.updateImagesList(images_list);
+		}
+		// When change transition time
+		if (e.affectsConfiguration('vione.view.transitionTime')) {
+			const transition_time: any = vscode.workspace.getConfiguration().get('vione.view.transitionTime');
+			provider.setTransitionTime(transition_time);
+			// console.log(transition_time);
+		}
+	}));
 }
 
 // This method is called when the extension is deactivated
@@ -48,10 +76,21 @@ class ImagesViewProvider implements vscode.WebviewViewProvider {
 		webviewView.webview.html = this._getHtmlForWebview(webviewView.webview);
 	}
 
-	public updateImage() {
+	public nextImage(images_list: any) {
 		if (this._view) {
-			let imagesList:string[] = vscode.workspace.getConfiguration().get('vione.view.uniqueImageArray') || [""];
-			this._view.webview.postMessage({ type: 'updateImage', images: imagesList });
+			this._view.webview.postMessage({ type: 'nextImage', images: images_list });
+		}
+	}
+
+	public updateImagesList(images_list: any) {
+		if (this._view) {
+			this._view.webview.postMessage({ type: 'updateImagesList', images: images_list });
+		}
+	}
+
+	public setTransitionTime(transition_time: any) {
+		if (this._view) {
+			this._view.webview.postMessage({ type: 'setTransitionTime', time: transition_time });
 		}
 	}
 

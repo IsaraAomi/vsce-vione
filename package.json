@@ -18,7 +18,8 @@
 	],
 	"activationEvents": [
 		"onView:imageView",
-		"onCommand:updateImage"
+		"onCommand:nextImage",
+		"onCommand:config.commands.setTransitionTime"
 	],
 	"main": "./out/extension.js",
 	"keywords": [
@@ -28,7 +29,7 @@
 		"configuration": [
 			{
 				"id": "imageList",
-				"title": "View Image on VSCode Explorer",
+				"title": "Image List",
 				"properties": {
 					"vione.view.uniqueImageArray": {
 						"type": "array",
@@ -37,6 +38,17 @@
 							"type": "string"
 						},
 						"uniqueItems": true
+					}
+				}
+			},
+			{
+				"id": "transitionTime",
+				"title": "Transition Time",
+				"properties": {
+					"vione.view.transitionTime": {
+						"type": "number",
+						"description": "Automatic transition time (seconds). '0' means this option is disabled.",
+						"default": 0
 					}
 				}
 			}
@@ -52,16 +64,21 @@
 		},
 		"commands": [
 			{
-				"command": "updateImage",
+				"command": "nextImage",
 				"category": "VIONE",
-				"title": "Update Image",
+				"title": "Next Image",
 				"icon": "$(sync)"
+			},
+			{
+				"category": "VIONE",
+				"command": "config.commands.setTransitionTime",
+				"title": "Set Transition Time"
 			}
 		],
 		"menus": {
 			"view/title": [
 				{
-					"command": "updateImage",
+					"command": "nextImage",
 					"group": "navigation",
 					"when": "view == imageView"
 				}
