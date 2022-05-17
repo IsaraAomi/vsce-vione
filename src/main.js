@@ -36,6 +36,7 @@
         if (image) {
             // @ts-ignore
             elem.src = image;
+            elem.title = image;
         } else {
             // @ts-ignore
             elem.src = start_image;
