@@ -5,10 +5,9 @@
 (function () {
     // @ts-ignore
     const vscode = acquireVsCodeApi();
-    const images = [
-        'https://downloads.fanbox.cc/images/post/3802639/irk3hJmEJNmiT5AUU8pebQ4m.png',
-        'https://downloads.fanbox.cc/images/post/3802639/xNc5Ai83w5ZwALhSIjh8E8y3.png'
-    ];
+    const start_image = "https://github.com/IsaraAomi/vsce-vione/blob/master/media/setting_example_edit.png?raw=true"
+    
+    var images = [start_image];    
     const oldState = vscode.getState() || { image: images[0] };
 
     var image = oldState.image;
@@ -23,7 +22,8 @@
         switch (message.type) {
             case 'updateImage':
                 {
-                    updateImage(image);
+                    images = message.images;
+                    updateImage(image, images);
                     break;
                 }
         }
@@ -33,15 +33,21 @@
      * @param {string} image
      */
     function setSource(image) {
-        // @ts-ignore
-        elem.src = image;
+        if (image) {
+            // @ts-ignore
+            elem.src = image;
+        } else {
+            // @ts-ignore
+            elem.src = start_image;
+        }
         vscode.setState({ image: image });
     }
 
     /**
-     * @param {any} image
+     * @param {string} image
+     * @param {string[]} images
      */
-    function updateImage(image) {
+    function updateImage(image, images) {
         if (index >= images.length - 1) {
             index = 0;
         } else {

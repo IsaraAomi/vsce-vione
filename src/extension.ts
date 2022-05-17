@@ -6,7 +6,7 @@ import * as vscode from 'vscode';
 // your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
 
-	// Explorer
+	// Webview
 	const provider = new ImagesViewProvider(context.extensionUri);
 	context.subscriptions.push(
 		vscode.window.registerWebviewViewProvider(ImagesViewProvider.viewType, provider));
@@ -50,7 +50,8 @@ class ImagesViewProvider implements vscode.WebviewViewProvider {
 
 	public updateImage() {
 		if (this._view) {
-			this._view.webview.postMessage({ type: 'updateImage' });
+			let imagesList:string[] = vscode.workspace.getConfiguration().get('vione.view.uniqueImageArray') || [""];
+			this._view.webview.postMessage({ type: 'updateImage', images: imagesList });
 		}
 	}
 
