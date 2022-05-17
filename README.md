@@ -1,11 +1,13 @@
 # View Image on VSCode Explorer
 - This extension allows you to view images on VSCode's explorer.
 
-![](media/vsce-vione_001.png)
-![](media/vsce-vione_002.png)
+## How to Use
+![](media/setting_example_edit.png)
 
-## Reference & Guideline
+## Reference
 - [るるどらいおんガイドライン](https://www.fanbox.cc/@rurudot/posts/3802639)
+
+---
 
 ## Developer's Note
 
