@@ -29,9 +29,9 @@
 				"id": "imageList",
 				"title": "View Image on VSCode Explorer",
 				"properties": {
-					"conf.settingsEditor.uniqueEnumArraySetting": {
+					"vione.view.uniqueImageArray": {
 						"type": "array",
-						"description": "List of your favorite images",
+						"description": "URL of your favorite images.",
 						"items": {
 							"type": "string"
 						},
