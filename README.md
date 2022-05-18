@@ -5,6 +5,11 @@
 - [Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=IsaraCarousel.vsce-vione)
 
 ## How to Use
+1. Search "vione" in VSCode's configuration.
+2. Set URLs to images. (You can set multiple URLs.)
+3. Click update button. (It will probably be reflected automatically.)
+4. (Optional) You can "Transition Time" to change images at regular intervals.
+
 ![](media/setting_example_edit.png)
 
 - `.gif` image is also OK.
@@ -13,6 +18,7 @@
 
 ## Reference
 - [るるどらいおんガイドライン](https://www.fanbox.cc/@rurudot/posts/3802639)
+- [Nyan Cat](https://c.tenor.com/b5KaSeHWOtUAAAAC/nyan-cat-rainbow-cat.gif)
 
 ---
 
