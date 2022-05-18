@@ -7,6 +7,10 @@
 ## How to Use
 ![](media/setting_example_edit.png)
 
+- `.gif` image is also OK.
+
+![](media/vsce-vione_nyancat.gif)
+
 ## Reference
 - [るるどらいおんガイドライン](https://www.fanbox.cc/@rurudot/posts/3802639)
 
