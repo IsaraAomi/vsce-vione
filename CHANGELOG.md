@@ -5,6 +5,9 @@ All notable changes to the "vsce-vione" extension will be documented in this fil
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
 
 ## [Released]
+- v0.0.11
+  - Modified to load configuration when change WebviewView.
+  - Support transition time again.
 - v0.0.10
   - Found bugs.
     - Cannot initialize when move between activity bar menus.
