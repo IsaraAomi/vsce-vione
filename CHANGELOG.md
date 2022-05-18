@@ -5,6 +5,10 @@ All notable changes to the "vsce-vione" extension will be documented in this fil
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
 
 ## [Released]
+- v0.0.7
+  - Refactoring source codes.
+    - It's possible to read configuration at webview start.
+    - Place "transition time" field, but it's be invalid yet. 
 - v0.0.6
   - Bugfix.
 - v0.0.5
