@@ -101,7 +101,7 @@
         for (let i = 0; ; i++) {
             // element.innerHTML = (local_interval_time * i).toString();
             await sleep(local_interval_time * 1000)
-            if (local_interval_time == 0 || local_interval_time != interval_time) {
+            if (local_interval_time < 1 || local_interval_time != interval_time) {
                 break;
             }
             nextImage(images);
