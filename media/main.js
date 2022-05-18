@@ -15,10 +15,20 @@
 
     setSource(image);
 
+    // var element = document.getElementById("sample");
+    // var num = 100;
+    // element.innerHTML = num.toString();
+
     // Handle messages sent from the extension to the webview
     window.addEventListener('message', event => {
         const message = event.data; // The json data that the extension sent
         switch (message.type) {
+            case 'initilize':
+                {
+                    // var num = message.time;
+                    // element.innerHTML = num.toString();
+                    break;
+                }
             case 'nextImage':
                 {
                     images = message.images;
@@ -29,6 +39,12 @@
                 {
                     images = message.images;
                     setSource(images[0]);
+                    break;
+                }
+            case 'setTransitionTime':
+                {                 
+                    // var num = message.time;
+                    // element.innerHTML = num.toString();
                     break;
                 }
         }

@@ -27,8 +27,8 @@
 	"contributes": {
 		"configuration": [
 			{
-				"id": "imageList",
-				"title": "View Image on VSCode Explorer",
+				"id": "imagesList",
+				"title": "Images List",
 				"properties": {
 					"vione.view.uniqueImageArray": {
 						"type": "array",
@@ -37,6 +37,20 @@
 							"type": "string"
 						},
 						"uniqueItems": true
+					}
+				}
+			},
+			{
+				"id": "transitionTime",
+				"title": "Transition Time",
+				"properties": {
+					"vione.view.transitionTime": {
+						"type": "number",
+						"description": "Automatic transition time. '0' means this option is not diabled.",
+						"items": {
+							"type": "string"
+						},
+						"default": 0
 					}
 				}
 			}

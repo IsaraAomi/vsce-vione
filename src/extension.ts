@@ -12,35 +12,23 @@ export function activate(context: vscode.ExtensionContext) {
 	context.subscriptions.push(
 		vscode.window.registerWebviewViewProvider(ImagesViewProvider.viewType, provider));
 
-	// Load configuration at first (meaningless...)
-	// const images_list: any = vscode.workspace.getConfiguration().get('vione.view.uniqueImageArray');
-	// const transition_time: any = vscode.workspace.getConfiguration().get('vione.view.transitionTime');
-	// provider.updateImagesList(images_list);
-	// provider.setTransitionTime(transition_time);
-
 	// Push Next Image Button
-	context.subscriptions.push(
-		vscode.commands.registerCommand('nextImage', () => {
-			const images_list: any = vscode.workspace.getConfiguration().get('vione.view.uniqueImageArray');
-			provider.nextImage(images_list);
-			// const transition_time: any = vscode.workspace.getConfiguration().get('vione.view.transitionTime');
-			// provider.setTransitionTime(transition_time);
-			// console.log(transition_time);
-		}));
+	context.subscriptions.push(vscode.commands.registerCommand('nextImage', () => {
+		provider.nextImage();
+		provider.setTransitionTime();
+		
+	}));
 		
 	// Listen to configuration when they are changed
 	context.subscriptions.push(vscode.workspace.onDidChangeConfiguration(e => {
 		// When change image list
 		if (e.affectsConfiguration('vione.view.uniqueImageArray')) {
-			const images_list: any = vscode.workspace.getConfiguration().get('vione.view.uniqueImageArray');
-			provider.updateImagesList(images_list);
+			provider.updateImagesList();
 		}
 		// When change transition time
-		// if (e.affectsConfiguration('vione.view.transitionTime')) {
-		// 	const transition_time: any = vscode.workspace.getConfiguration().get('vione.view.transitionTime');
-		// 	provider.setTransitionTime(transition_time);
-		// 	// console.log(transition_time);
-		// }
+		if (e.affectsConfiguration('vione.view.transitionTime')) {
+			provider.setTransitionTime();
+		}
 	}));
 }
 
@@ -72,27 +60,39 @@ class ImagesViewProvider implements vscode.WebviewViewProvider {
 				this._extensionUri
 			]
 		};
-
+		
 		webviewView.webview.html = this._getHtmlForWebview(webviewView.webview);
+		
+		// Load configuration at start webview
+		const images_list: any = vscode.workspace.getConfiguration().get('vione.view.uniqueImageArray');
+		const transition_time: any = vscode.workspace.getConfiguration().get('vione.view.transitionTime');
+		console.log(transition_time);
+		if (this._view) {
+			this._view.webview.postMessage({ type: 'initilize', images: images_list, time: transition_time });
+		}
 	}
 
-	public nextImage(images_list: any) {
+	public nextImage() {
+		const images_list: any = vscode.workspace.getConfiguration().get('vione.view.uniqueImageArray');
 		if (this._view) {
 			this._view.webview.postMessage({ type: 'nextImage', images: images_list });
 		}
 	}
 
-	public updateImagesList(images_list: any) {
+	public updateImagesList() {
+		const images_list: any = vscode.workspace.getConfiguration().get('vione.view.uniqueImageArray');
 		if (this._view) {
 			this._view.webview.postMessage({ type: 'updateImagesList', images: images_list });
 		}
 	}
 
-	// public setTransitionTime(transition_time: any) {
-	// 	if (this._view) {
-	// 		this._view.webview.postMessage({ type: 'setTransitionTime', time: transition_time });
-	// 	}
-	// }
+	public setTransitionTime() {
+		const transition_time: any = vscode.workspace.getConfiguration().get('vione.view.transitionTime');
+		if (this._view) {
+			this._view.webview.postMessage({ type: 'setTransitionTime', time: transition_time });
+		}
+		console.log(transition_time);
+	}
 
 	private _getHtmlForWebview(webview: vscode.Webview) {
 		// Get the local path to main script run in the webview, then convert it to a uri we can use in the webview.
@@ -115,6 +115,9 @@ class ImagesViewProvider implements vscode.WebviewViewProvider {
 				<meta name="viewport" content="width=device-width, initial-scale=1.0">
 			</head>
 			<body>
+				<!--
+					<p id=sample>sample test</p>
+				-->
 				<img id="image_0"/>
 				<script nonce="${nonce}" src="${scriptUri}"></script>
 			</body>
