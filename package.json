@@ -46,7 +46,7 @@
 				"properties": {
 					"vione.view.transitionTime": {
 						"type": "number",
-						"description": "Automatic transition time. '0' means this option is not diabled.",
+						"description": "Automatic transition time (seconds). '0' means this option is not diabled.",
 						"items": {
 							"type": "string"
 						},
