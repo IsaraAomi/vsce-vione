@@ -7,11 +7,15 @@
     const vscode = acquireVsCodeApi();
     const start_image = "https://github.com/IsaraAomi/vsce-vione/blob/master/media/setting_example_edit.png?raw=true"
     
-    var images;
-    var interval_time;
-    var image;
-    var index;
+    var images = [start_image];    
+    const oldState = vscode.getState() || { image: images[0] };
+    var image = oldState.image;
+    var index = images.indexOf(image);
     var elem = document.getElementById("image_0");
+    var interval_time = 0;
+
+    setSource(image);
+    // doLoop(interval_time);
 
     // var element = document.getElementById("sample");
     // var num = 666;
@@ -32,7 +36,7 @@
                     image = oldState.image
                     index = images.indexOf(image)
                     setSource(image);
-                    doLoop(interval_time);
+                    // doLoop(interval_time);
                     break;
                 }
             case 'nextImage':
@@ -56,7 +60,7 @@
             case 'setTransitionTime':
                 {
                     interval_time = message.time;
-                    doLoop(interval_time);
+                    // doLoop(interval_time);
                     break;
                 }
         }
