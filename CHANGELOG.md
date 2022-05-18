@@ -5,6 +5,8 @@ All notable changes to the "vsce-vione" extension will be documented in this fil
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
 
 ## [Released]
+- v0.0.8
+  - Implemented transition time.
 - v0.0.7
   - Refactoring source codes.
     - It's possible to read configuration at webview start.
