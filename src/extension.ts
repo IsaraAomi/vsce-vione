@@ -64,34 +64,32 @@ class ImagesViewProvider implements vscode.WebviewViewProvider {
 		webviewView.webview.html = this._getHtmlForWebview(webviewView.webview);
 		
 		// Load configuration at start webview
-		const images_list: any = vscode.workspace.getConfiguration().get('vione.view.uniqueImageArray');
-		const transition_time: any = vscode.workspace.getConfiguration().get('vione.view.transitionTime');
-		console.log(transition_time);
+		const images_list: string[] = vscode.workspace.getConfiguration().get('vione.view.uniqueImageArray') || [""];
+		const transition_time: number = vscode.workspace.getConfiguration().get('vione.view.transitionTime') || 0;
 		if (this._view) {
 			this._view.webview.postMessage({ type: 'initilize', images: images_list, time: transition_time });
 		}
 	}
 
 	public nextImage() {
-		const images_list: any = vscode.workspace.getConfiguration().get('vione.view.uniqueImageArray');
+		const images_list: string[] = vscode.workspace.getConfiguration().get('vione.view.uniqueImageArray') || [""];
 		if (this._view) {
 			this._view.webview.postMessage({ type: 'nextImage', images: images_list });
 		}
 	}
 
 	public updateImagesList() {
-		const images_list: any = vscode.workspace.getConfiguration().get('vione.view.uniqueImageArray');
+		const images_list: string[] = vscode.workspace.getConfiguration().get('vione.view.uniqueImageArray') || [""];
 		if (this._view) {
 			this._view.webview.postMessage({ type: 'updateImagesList', images: images_list });
 		}
 	}
 
 	public setTransitionTime() {
-		const transition_time: any = vscode.workspace.getConfiguration().get('vione.view.transitionTime');
+		const transition_time: number = vscode.workspace.getConfiguration().get('vione.view.transitionTime') || 0;
 		if (this._view) {
 			this._view.webview.postMessage({ type: 'setTransitionTime', time: transition_time });
 		}
-		console.log(transition_time);
 	}
 
 	private _getHtmlForWebview(webview: vscode.Webview) {

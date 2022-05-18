@@ -7,16 +7,14 @@
     const vscode = acquireVsCodeApi();
     const start_image = "https://github.com/IsaraAomi/vsce-vione/blob/master/media/setting_example_edit.png?raw=true"
     
-    var images = [start_image];    
-    const oldState = vscode.getState() || { image: images[0] };
-    var image = oldState.image;
-    var index = images.indexOf(image);
+    var images;
+    var interval_time;
+    var image;
+    var index;
     var elem = document.getElementById("image_0");
 
-    setSource(image);
-
     // var element = document.getElementById("sample");
-    // var num = 100;
+    // var num = 666;
     // element.innerHTML = num.toString();
 
     // Handle messages sent from the extension to the webview
@@ -27,17 +25,32 @@
                 {
                     // var num = message.time;
                     // element.innerHTML = num.toString();
+                    images = message.images;
+                    interval_time = message.time;
+                    if (images.length == 0) {
+                        images = [start_image];
+                    }
+                    const oldState = vscode.getState() || { image: images[0] };
+                    image = oldState.image
+                    index = images.indexOf(image)
+                    setSource(image);
                     break;
                 }
             case 'nextImage':
                 {
                     images = message.images;
+                    if (images.length == 0) {
+                        images = [start_image];
+                    }
                     nextImage(images);
                     break;
                 }
             case 'updateImagesList':
                 {
                     images = message.images;
+                    if (images.length == 0) {
+                        images = [start_image];
+                    }
                     setSource(images[0]);
                     break;
                 }
@@ -54,14 +67,9 @@
      * @param {string} image
      */
     function setSource(image) {
-        if (image) {
-            // @ts-ignore
-            elem.src = image;
-            elem.title = image;
-        } else {
-            // @ts-ignore
-            elem.src = start_image;
-        }
+        // @ts-ignore
+        elem.src = image;
+        elem.title = image;
         vscode.setState({ image: image });
     }
 
