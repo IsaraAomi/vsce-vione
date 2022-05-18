@@ -7,15 +7,14 @@
     const vscode = acquireVsCodeApi();
     const start_image = "https://github.com/IsaraAomi/vsce-vione/blob/master/media/setting_example_edit.png?raw=true"
     
-    var images = [start_image];    
+    let images = [start_image];
     const oldState = vscode.getState() || { image: images[0] };
-    var image = oldState.image;
-    var index = images.indexOf(image);
-    var elem = document.getElementById("image_0");
-    var interval_time = 0;
-
-    setSource(image);
-    // doLoop(interval_time);
+    /** @type {string} */
+    let image = oldState.image;
+ 
+    let interval_time = 0;
+    let index = 0;
+    let elem = document.getElementById("image_0");
 
     // var element = document.getElementById("sample");
     // var num = 666;
@@ -33,10 +32,10 @@
                         images = [start_image];
                     }
                     const oldState = vscode.getState() || { image: images[0] };
-                    image = oldState.image
+                    image = oldState.image;
                     index = images.indexOf(image)
                     setSource(image);
-                    // doLoop(interval_time);
+                    doLoop(interval_time);
                     break;
                 }
             case 'nextImage':
@@ -45,7 +44,7 @@
                     if (images.length == 0) {
                         images = [start_image];
                     }
-                    nextImage(images);
+                    nextImage();
                     break;
                 }
             case 'updateImagesList':
@@ -54,13 +53,14 @@
                     if (images.length == 0) {
                         images = [start_image];
                     }
-                    setSource(images[0]);
+                    index = 0;
+                    setSource(images[index]);
                     break;
                 }
             case 'setTransitionTime':
                 {
                     interval_time = message.time;
-                    // doLoop(interval_time);
+                    doLoop(interval_time);
                     break;
                 }
         }
@@ -76,10 +76,7 @@
         vscode.setState({ image: image });
     }
 
-    /**
-     * @param {string[]} images
-     */
-    function nextImage(images) {
+    function nextImage() {
         if (index >= images.length - 1) {
             index = 0;
         } else {
@@ -108,7 +105,7 @@
             if (local_interval_time < 1 || local_interval_time != interval_time) {
                 break;
             }
-            nextImage(images);
+            nextImage();
         }
     }
 }());

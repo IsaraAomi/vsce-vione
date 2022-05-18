@@ -8,7 +8,7 @@ export function activate(context: vscode.ExtensionContext) {
 
 	const provider = new ImagesViewProvider(context.extensionUri);
 
-	// Webview
+	// WebviewView
 	context.subscriptions.push(
 		vscode.window.registerWebviewViewProvider(ImagesViewProvider.viewType, provider));
 
@@ -61,11 +61,24 @@ class ImagesViewProvider implements vscode.WebviewViewProvider {
 		
 		webviewView.webview.html = this._getHtmlForWebview(webviewView.webview);
 		
-		// Load configuration at start webview
+		// Load configuration at start WebviewView
 		const images_list: string[] = vscode.workspace.getConfiguration().get('vione.view.uniqueImageArray') || [""];
 		const transition_time: number = vscode.workspace.getConfiguration().get('vione.view.transitionTime') || 0;
 		if (this._view) {
 			this._view.webview.postMessage({ type: 'initilize', images: images_list, time: transition_time });
+		}
+		// console.log("start_WebviewView");
+
+		// Load configuration at change WebviewView
+		if (this._view) {
+			this._view?.onDidChangeVisibility(e => {
+				const images_list: string[] = vscode.workspace.getConfiguration().get('vione.view.uniqueImageArray') || [""];
+				const transition_time: number = vscode.workspace.getConfiguration().get('vione.view.transitionTime') || 0;
+				if (this._view) {
+					this._view.webview.postMessage({ type: 'initilize', images: images_list, time: transition_time });
+				}
+				// console.log("change_WebviewView");
+			});
 		}
 	}
 
