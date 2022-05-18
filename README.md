@@ -8,7 +8,7 @@
 1. Search "vione" in VSCode's configuration.
 2. Set URLs to images. (You can set multiple URLs.)
 3. Click update button. (It will probably be reflected automatically.)
-4. (Optional) You can "Transition Time" to change images at regular intervals.
+4. (Optional) You can set "Transition Time" to change images at regular intervals.
 
 ![](media/setting_example_edit.png)
 
