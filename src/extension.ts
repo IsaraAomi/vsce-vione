@@ -15,8 +15,6 @@ export function activate(context: vscode.ExtensionContext) {
 	// Push Next Image Button
 	context.subscriptions.push(vscode.commands.registerCommand('nextImage', () => {
 		provider.nextImage();
-		provider.setTransitionTime();
-		
 	}));
 		
 	// Listen to configuration when they are changed

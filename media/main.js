@@ -23,8 +23,6 @@
         switch (message.type) {
             case 'initilize':
                 {
-                    // var num = message.time;
-                    // element.innerHTML = num.toString();
                     images = message.images;
                     interval_time = message.time;
                     if (images.length == 0) {
@@ -34,6 +32,7 @@
                     image = oldState.image
                     index = images.indexOf(image)
                     setSource(image);
+                    doLoop(interval_time);
                     break;
                 }
             case 'nextImage':
@@ -55,9 +54,9 @@
                     break;
                 }
             case 'setTransitionTime':
-                {                 
-                    // var num = message.time;
-                    // element.innerHTML = num.toString();
+                {
+                    interval_time = message.time;
+                    doLoop(interval_time);
                     break;
                 }
         }
@@ -84,6 +83,29 @@
         }
         image = images[index];
         setSource(image);
+    }
+
+    /**
+     * @param {number} time
+     */
+    function sleep (time) {
+        return new Promise(resolve => {
+            setTimeout(resolve, time)
+        })
+    }
+
+    /**
+     * @param {number} local_interval_time
+     */
+    async function doLoop (local_interval_time) {
+        for (let i = 0; ; i++) {
+            // element.innerHTML = (local_interval_time * i).toString();
+            await sleep(local_interval_time * 1000)
+            if (local_interval_time == 0 || local_interval_time != interval_time) {
+                break;
+            }
+            nextImage(images);
+        }
     }
 }());
 
