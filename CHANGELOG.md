@@ -5,6 +5,10 @@ All notable changes to the "vsce-vione" extension will be documented in this fil
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
 
 ## [Released]
+- v0.0.10
+  - Found bugs.
+    - Cannot initialize when move between activity bar menus.
+    - Fixed this problem temporaily, but stop trasition time option.
 - v0.0.9
   - Modified description in transition time. 
 - v0.0.8

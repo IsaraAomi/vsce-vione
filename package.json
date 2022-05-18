@@ -1,8 +1,8 @@
 {
-  "name": "vsce-vione",
+  	"name": "vsce-vione",
 	"displayName": "View Image on VSCode Explorer",
 	"description": "View Image on VSCode Explorer",
-	"version": "0.0.9",
+	"version": "0.0.10",
 	"engines": {
 		"vscode": "^1.67.0"
 	},
