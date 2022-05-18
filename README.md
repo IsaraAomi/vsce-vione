@@ -1,6 +1,9 @@
 # View Image on VSCode Explorer
 - This extension allows you to view images on VSCode's explorer.
 
+## Installation
+- [Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=IsaraCarousel.vsce-vione)
+
 ## How to Use
 ![](media/setting_example_edit.png)
 
