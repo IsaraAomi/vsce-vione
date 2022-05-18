@@ -5,6 +5,8 @@ All notable changes to the "vsce-vione" extension will be documented in this fil
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
 
 ## [Released]
+- v0.0.12
+  - Changed logo image.
 - v0.0.11
   - Modified to load configuration when change WebviewView.
   - Support transition time again.
