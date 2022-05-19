@@ -71,7 +71,7 @@ class ImagesViewProvider implements vscode.WebviewViewProvider {
 
 		// Load configuration at change WebviewView
 		if (this._view) {
-			this._view?.onDidChangeVisibility(e => {
+			this._view.onDidChangeVisibility(e => {
 				const images_list: string[] = vscode.workspace.getConfiguration().get('vione.view.uniqueImageArray') || [""];
 				const transition_time: number = vscode.workspace.getConfiguration().get('vione.view.transitionTime') || 0;
 				if (this._view) {
