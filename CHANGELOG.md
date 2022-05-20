@@ -5,6 +5,8 @@ All notable changes to the "vsce-vione" extension will be documented in this fil
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
 
 ## [Released]
+- v0.0.14
+  - Supported to load images from local directory.
 - v0.0.13
   - Updated README.
 - v0.0.12
