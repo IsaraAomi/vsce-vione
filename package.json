@@ -27,16 +27,28 @@
 	"contributes": {
 		"configuration": [
 			{
-				"id": "imagesList",
-				"title": "Images List",
+				"id": "imageWebUrlArray",
+				"title": "Web URLs of Images",
 				"properties": {
-					"vione.view.uniqueImageArray": {
+					"vione.view.imageWebUrlArray": {
 						"type": "array",
-						"description": "URL of your favorite images.",
+						"description": "Web URLs of images.",
 						"items": {
 							"type": "string"
-						},
-						"uniqueItems": true
+						}
+					}
+				}
+			},
+			{
+				"id": "imageLocalFullPathArray",
+				"title": "Local Full Paths of Images",
+				"properties": {
+					"vione.view.imageLocalFullPathArray": {
+						"type": "array",
+						"description": "Local full paths where image files are located.",
+						"items": {
+							"type": "string"
+						}
 					}
 				}
 			},

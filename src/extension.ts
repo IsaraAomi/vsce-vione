@@ -1,6 +1,7 @@
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
+import * as path from 'path';
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
@@ -20,7 +21,8 @@ export function activate(context: vscode.ExtensionContext) {
 	// Listen to configuration when they are changed
 	context.subscriptions.push(vscode.workspace.onDidChangeConfiguration(e => {
 		// When change image list
-		if (e.affectsConfiguration('vione.view.uniqueImageArray')) {
+		if (e.affectsConfiguration('vione.view.imageWebUrlArray') ||
+			e.affectsConfiguration('vione.view.imageLocalFullPathArray')) {
 			provider.updateImagesList();
 		}
 		// When change transition time
@@ -35,14 +37,28 @@ export const deactivate = () => {};
 
 class ImagesViewProvider implements vscode.WebviewViewProvider {
 
+	// ----- public member ----- //
+
 	public static readonly viewType = 'imageView';
+	
+	// ----- private member ----- //
 
 	private _view?: vscode.WebviewView;
+	private _transition_time?: number;
+	private _start_image?: string; 
+	private _imageWebUrlArray?: string[];
+	private _imageLocalFullPathArray?: string[];
+	private _imageLocalUrlArray?: string[];
+	private _imageUrlArray?: string[];
 
 	constructor(
 		private readonly _extensionUri: vscode.Uri,
 	) { }
 
+	// ----- public function ----- //
+
+	// `resolveWebviewView` is called when a view first becomes visible.
+	// This may happen when the view is first loaded or when the user hides and then shows a view again.
 	public resolveWebviewView(
 		webviewView: vscode.WebviewView,
 		context: vscode.WebviewViewResolveContext,
@@ -50,32 +66,33 @@ class ImagesViewProvider implements vscode.WebviewViewProvider {
 	) {
 		this._view = webviewView;
 
-		webviewView.webview.options = {
-			// Allow scripts in the webview
-			enableScripts: true,
-
-			localResourceRoots: [
-				this._extensionUri
-			]
-		};
+		this._loadConfiguration();
 		
+		// Show HTML
 		webviewView.webview.html = this._getHtmlForWebview(webviewView.webview);
-		
-		// Load configuration at start WebviewView
-		const images_list: string[] = vscode.workspace.getConfiguration().get('vione.view.uniqueImageArray') || [""];
-		const transition_time: number = vscode.workspace.getConfiguration().get('vione.view.transitionTime') || 0;
-		if (this._view) {
-			this._view.webview.postMessage({ type: 'initilize', images: images_list, time: transition_time });
-		}
-		// console.log("start_WebviewView");
 
-		// Load configuration at change WebviewView
+		// Initialize at start WebviewView
+		if (this._view) {
+			this._view.webview.postMessage({
+				type: 'initilize',
+				imageUrlArray: this._imageUrlArray,
+				transition_time: this._transition_time,
+				start_image: this._start_image
+			});
+			// console.log("start_WebviewView");
+		}
+
+		// Reload at change WebviewView
 		if (this._view) {
 			this._view.onDidChangeVisibility(e => {
-				const images_list: string[] = vscode.workspace.getConfiguration().get('vione.view.uniqueImageArray') || [""];
-				const transition_time: number = vscode.workspace.getConfiguration().get('vione.view.transitionTime') || 0;
+				this._loadConfiguration();
 				if (this._view) {
-					this._view.webview.postMessage({ type: 'initilize', images: images_list, time: transition_time });
+					this._view.webview.postMessage({
+						type: 'initilize',
+						imageUrlArray: this._imageUrlArray,
+						transition_time: this._transition_time,
+						start_image: this._start_image
+					});
 				}
 				// console.log("change_WebviewView");
 			});
@@ -83,23 +100,87 @@ class ImagesViewProvider implements vscode.WebviewViewProvider {
 	}
 
 	public nextImage() {
-		const images_list: string[] = vscode.workspace.getConfiguration().get('vione.view.uniqueImageArray') || [""];
+		this._loadConfiguration();
 		if (this._view) {
-			this._view.webview.postMessage({ type: 'nextImage', images: images_list });
+			this._view.webview.postMessage({
+				type: 'nextImage',
+				imageUrlArray: this._imageUrlArray,
+				transition_time: this._transition_time,
+				start_image: this._start_image
+			});
 		}
 	}
 
 	public updateImagesList() {
-		const images_list: string[] = vscode.workspace.getConfiguration().get('vione.view.uniqueImageArray') || [""];
+		this._loadConfiguration();
 		if (this._view) {
-			this._view.webview.postMessage({ type: 'updateImagesList', images: images_list });
+			this._view.webview.postMessage({
+				type: 'updateImagesList',
+				imageUrlArray: this._imageUrlArray,
+				transition_time: this._transition_time,
+				start_image: this._start_image
+			});
 		}
 	}
 
 	public setTransitionTime() {
-		const transition_time: number = vscode.workspace.getConfiguration().get('vione.view.transitionTime') || 0;
+		this._loadConfiguration();
 		if (this._view) {
-			this._view.webview.postMessage({ type: 'setTransitionTime', time: transition_time });
+			this._view.webview.postMessage({
+				type: 'setTransitionTime',
+				imageUrlArray: this._imageUrlArray,
+				transition_time: this._transition_time,
+				start_image: this._start_image
+			});
+		}
+	}
+
+	// ----- private function ----- //
+
+	private _getLocalUrlArray(localFullPathArray: string[]) {
+		let localUrlArray = [];
+		if (this._view) {
+			for (let i = 0; i < localFullPathArray.length; i++) {
+				localUrlArray.push(this._view.webview.asWebviewUri(vscode.Uri.joinPath(vscode.Uri.file(localFullPathArray[i]))).toString());
+			}
+		}
+		return localUrlArray;
+	}
+
+	private _getLocalDirectoryPathArray(localFullPathArray: string[]) {
+		let localDirectoryArray: string[] = [];
+		for (let i = 0; i < localFullPathArray.length; i++) {
+			localDirectoryArray.push(path.dirname(localFullPathArray[i]));
+		}
+		return localDirectoryArray;
+	}
+
+	private _loadConfiguration() {
+		if (this._view) {
+			// Load configuration
+			this._imageWebUrlArray = vscode.workspace.getConfiguration().get('vione.view.imageWebUrlArray') || [""];
+			this._imageLocalFullPathArray = vscode.workspace.getConfiguration().get('vione.view.imageLocalFullPathArray') || [""];
+			this._transition_time = vscode.workspace.getConfiguration().get('vione.view.transitionTime') || 0;
+
+			// Compose webviewView.webview.options
+			const imageLocalDirectoryPathArray: string[] = this._getLocalDirectoryPathArray(this._imageLocalFullPathArray);
+			let localResourceRoots = [this._extensionUri];
+			for (let i=0; i < imageLocalDirectoryPathArray.length; i++) {
+				localResourceRoots.push(vscode.Uri.file(imageLocalDirectoryPathArray[i]))
+			}
+			this._view.webview.options = {
+				// Allow scripts in the webview
+				enableScripts: true,
+				// Allow to access to local resources in the webview
+				localResourceRoots: localResourceRoots
+			};
+
+			// Compose imageUrlArray
+			this._imageLocalUrlArray = this._getLocalUrlArray(this._imageLocalFullPathArray);
+			this._imageUrlArray = this._imageWebUrlArray.concat(this._imageLocalUrlArray);
+
+			// Start image
+			this._start_image = this._view.webview.asWebviewUri(vscode.Uri.joinPath(this._extensionUri, 'media', 'setting_example_edit.png')).toString();
 		}
 	}
 
