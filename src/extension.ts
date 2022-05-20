@@ -165,7 +165,7 @@ class ImagesViewProvider implements vscode.WebviewViewProvider {
 			// Compose webviewView.webview.options
 			const imageLocalDirectoryPathArray: string[] = this._getLocalDirectoryPathArray(this._imageLocalFullPathArray);
 			let localResourceRoots = [this._extensionUri];
-			for (let i=0; i < imageLocalDirectoryPathArray.length; i++) {
+			for (let i = 0; i < imageLocalDirectoryPathArray.length; i++) {
 				localResourceRoots.push(vscode.Uri.file(imageLocalDirectoryPathArray[i]))
 			}
 			this._view.webview.options = {
