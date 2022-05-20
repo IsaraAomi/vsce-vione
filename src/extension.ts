@@ -141,7 +141,7 @@ class ImagesViewProvider implements vscode.WebviewViewProvider {
 		let localUrlArray = [];
 		if (this._view) {
 			for (let i = 0; i < localFullPathArray.length; i++) {
-				localUrlArray.push(this._view.webview.asWebviewUri(vscode.Uri.joinPath(vscode.Uri.file(localFullPathArray[i]))).toString());
+				localUrlArray.push(this._view.webview.asWebviewUri(vscode.Uri.file(localFullPathArray[i])).toString());
 			}
 		}
 		return localUrlArray;
