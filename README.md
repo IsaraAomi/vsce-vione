@@ -9,11 +9,11 @@
 2. Set URIs to images. (You can set multiple URIs.)
     - Web URLs
       - Example:
-        - https://example.com/image.png
+        - `https://example.com/image.png`
     - Local Full Paths
       - Example: 
-        - Windows: C:\Users\UserName\Pictures\image.png
-        - Linux: /home/username/Pictures/image.png
+        - Windows: `C:\Users\UserName\Pictures\image.png`
+        - Linux: `/home/username/Pictures/image.png`
 3. You can set "Transition Time" to change images at regular intervals. (Optional)
 4. Click update button. (It will probably be reflected automatically.)
 
