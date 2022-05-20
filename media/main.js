@@ -36,12 +36,14 @@
                     image = oldState.image;
                     index = images.indexOf(image)
                     setSource(image);
-                    doLoop(interval_time);
+                    doLoop(images, interval_time);
                     break;
                 }
             case 'nextImage':
                 {
                     images = message.imageUrlArray;
+                    interval_time = message.transition_time;
+                    start_image = message.start_image;
                     if (images.length == 0) {
                         images = [start_image];
                     }
@@ -51,18 +53,22 @@
             case 'updateImagesList':
                 {
                     images = message.imageUrlArray;
+                    interval_time = message.transition_time;
                     start_image = message.start_image;
                     if (images.length == 0) {
                         images = [start_image];
                     }
                     index = 0;
                     setSource(images[index]);
+                    doLoop(images, interval_time);
                     break;
                 }
             case 'setTransitionTime':
                 {
+                    images = message.imageUrlArray;
                     interval_time = message.transition_time;
-                    doLoop(interval_time);
+                    start_image = message.start_image;
+                    doLoop(images, interval_time);
                     break;
                 }
         }
@@ -99,12 +105,15 @@
 
     /**
      * @param {number} local_interval_time
+     * @param {string[]} local_images
      */
-    async function doLoop (local_interval_time) {
+    async function doLoop (local_images, local_interval_time) {
         for (let i = 0; ; i++) {
             // element.innerHTML = (local_interval_time * i).toString();
             await sleep(local_interval_time * 1000)
-            if (local_interval_time < 1 || local_interval_time != interval_time) {
+            if (local_interval_time < 1 ||
+                local_images.length != images.length ||
+                local_interval_time != interval_time) {
                 break;
             }
             nextImage();

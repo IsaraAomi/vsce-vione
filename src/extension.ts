@@ -104,7 +104,9 @@ class ImagesViewProvider implements vscode.WebviewViewProvider {
 		if (this._view) {
 			this._view.webview.postMessage({
 				type: 'nextImage',
-				imageUrlArray: this._imageUrlArray
+				imageUrlArray: this._imageUrlArray,
+				transition_time: this._transition_time,
+				start_image: this._start_image
 			});
 		}
 	}
@@ -115,6 +117,7 @@ class ImagesViewProvider implements vscode.WebviewViewProvider {
 			this._view.webview.postMessage({
 				type: 'updateImagesList',
 				imageUrlArray: this._imageUrlArray,
+				transition_time: this._transition_time,
 				start_image: this._start_image
 			});
 		}
@@ -125,7 +128,9 @@ class ImagesViewProvider implements vscode.WebviewViewProvider {
 		if (this._view) {
 			this._view.webview.postMessage({
 				type: 'setTransitionTime',
-				transition_time: this._transition_time
+				imageUrlArray: this._imageUrlArray,
+				transition_time: this._transition_time,
+				start_image: this._start_image
 			});
 		}
 	}
