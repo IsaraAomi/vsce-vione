@@ -119,17 +119,17 @@ class ImagesViewProvider implements vscode.WebviewViewProvider {
 
 	// ----- private function ----- //
 
-	private _convertLocalFullPathArraytoLocalUrlArray(localFullPathArray: string[]) {
-		let localUriArray = [];
+	private _getLocalUrlArray(localFullPathArray: string[]) {
+		let localUrlArray = [];
 		if (this._view) {
 			for (let i = 0; i < localFullPathArray.length; i++) {
-				localUriArray.push(this._view.webview.asWebviewUri(vscode.Uri.joinPath(vscode.Uri.file(localFullPathArray[i]))).toString());
+				localUrlArray.push(this._view.webview.asWebviewUri(vscode.Uri.joinPath(vscode.Uri.file(localFullPathArray[i]))).toString());
 			}
 		}
-		return localUriArray;
+		return localUrlArray;
 	}
 
-	private _getLocalDirectoryPathArrayfromLocalFullPathArray(localFullPathArray: string[]) {
+	private _getLocalDirectoryPathArray(localFullPathArray: string[]) {
 		let localDirectoryArray: string[] = [];
 		for (let i = 0; i < localFullPathArray.length; i++) {
 			localDirectoryArray.push(path.dirname(localFullPathArray[i]));
@@ -145,7 +145,7 @@ class ImagesViewProvider implements vscode.WebviewViewProvider {
 			this._transition_time = vscode.workspace.getConfiguration().get('vione.view.transitionTime') || 0;
 
 			// Compose webviewView.webview.options
-			const imageLocalDirectoryPathArray: string[] = this._getLocalDirectoryPathArrayfromLocalFullPathArray(this._imageLocalFullPathArray);
+			const imageLocalDirectoryPathArray: string[] = this._getLocalDirectoryPathArray(this._imageLocalFullPathArray);
 			let localResourceRoots = [this._extensionUri];
 			for (let i=0; i < imageLocalDirectoryPathArray.length; i++) {
 				localResourceRoots.push(vscode.Uri.file(imageLocalDirectoryPathArray[i]))
@@ -158,7 +158,7 @@ class ImagesViewProvider implements vscode.WebviewViewProvider {
 			};
 
 			// Compose imageUrlArray
-			this._imageLocalUrlArray = this._convertLocalFullPathArraytoLocalUrlArray(this._imageLocalFullPathArray);
+			this._imageLocalUrlArray = this._getLocalUrlArray(this._imageLocalFullPathArray);
 			this._imageUrlArray = this._imageWebUrlArray.concat(this._imageLocalUrlArray);
 		}
 	}
