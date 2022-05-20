@@ -5,8 +5,8 @@
 (function () {
     // @ts-ignore
     const vscode = acquireVsCodeApi();
-    const start_image = "https://github.com/IsaraAomi/vsce-vione/blob/master/media/setting_example_edit.png?raw=true"
     
+    let start_image = "Please reload.";
     let images = [start_image];
     const oldState = vscode.getState() || { image: images[0] };
     /** @type {string} */
@@ -28,6 +28,7 @@
                 {
                     images = message.imageUrlArray;
                     interval_time = message.transition_time;
+                    start_image = message.start_image;
                     if (images.length == 0) {
                         images = [start_image];
                     }
@@ -50,6 +51,7 @@
             case 'updateImagesList':
                 {
                     images = message.imageUrlArray;
+                    start_image = message.start_image;
                     if (images.length == 0) {
                         images = [start_image];
                     }
