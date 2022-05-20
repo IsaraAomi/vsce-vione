@@ -6,9 +6,16 @@
 
 ## How to Use
 1. Search "vione" in VSCode's configuration.
-2. Set URLs to images. (You can set multiple URLs.)
-3. Click update button. (It will probably be reflected automatically.)
-4. (Optional) You can set "Transition Time" to change images at regular intervals.
+2. Set URIs to images. (You can set multiple URIs.)
+    - Web URLs
+      - Example:
+        - https://example.com/image.png
+    - Local Full Paths
+      - Example: 
+        - Windows: C:\Users\UserName\Pictures\image.png
+        - Linux: /home/username/Pictures/image.png
+3. You can set "Transition Time" to change images at regular intervals. (Optional)
+4. Click update button. (It will probably be reflected automatically.)
 
 ![](media/setting_example_edit.png)
 
