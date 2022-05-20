@@ -26,8 +26,8 @@
         switch (message.type) {
             case 'initilize':
                 {
-                    images = message.images;
-                    interval_time = message.time;
+                    images = message.imageUrlArray;
+                    interval_time = message.transition_time;
                     if (images.length == 0) {
                         images = [start_image];
                     }
@@ -40,7 +40,7 @@
                 }
             case 'nextImage':
                 {
-                    images = message.images;
+                    images = message.imageUrlArray;
                     if (images.length == 0) {
                         images = [start_image];
                     }
@@ -49,7 +49,7 @@
                 }
             case 'updateImagesList':
                 {
-                    images = message.images;
+                    images = message.imageUrlArray;
                     if (images.length == 0) {
                         images = [start_image];
                     }
@@ -59,7 +59,7 @@
                 }
             case 'setTransitionTime':
                 {
-                    interval_time = message.time;
+                    interval_time = message.transition_time;
                     doLoop(interval_time);
                     break;
                 }
