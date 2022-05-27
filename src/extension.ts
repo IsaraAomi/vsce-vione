@@ -22,7 +22,8 @@ export function activate(context: vscode.ExtensionContext) {
 	context.subscriptions.push(vscode.workspace.onDidChangeConfiguration(e => {
 		// When change image list
 		if (e.affectsConfiguration('vione.view.imageWebUrlArray') ||
-			e.affectsConfiguration('vione.view.imageLocalFullPathArray')) {
+			e.affectsConfiguration('vione.view.imageLocalFullPathArray') || 
+			e.affectsConfiguration('vione.view.imageRemoteFullPathArray')) {
 			provider.updateImagesList();
 		}
 		// When change transition time
@@ -47,9 +48,10 @@ class ImagesViewProvider implements vscode.WebviewViewProvider {
 	private _transition_time?: number;
 	private _start_image?: string; 
 	private _imageWebUrlArray?: string[];
-	private _imageLocalFullPathArray?: string[];
-	private _imageLocalUrlArray?: string[];
+	private _imageFsFullPathArray?: string[];
+	private _imageFsUrlArray?: string[];
 	private _imageUrlArray?: string[];
+	private _env?: string;
 
 	constructor(
 		private readonly _extensionUri: vscode.Uri,
@@ -66,6 +68,12 @@ class ImagesViewProvider implements vscode.WebviewViewProvider {
 	) {
 		this._view = webviewView;
 
+		if (vscode.env.remoteName == "wsl" || vscode.env.remoteName == "ssh-remote") {
+			this._env = "remote";
+		} else {
+			this._env = "local";
+		}
+		
 		this._loadConfiguration();
 		
 		// Show HTML
@@ -137,36 +145,41 @@ class ImagesViewProvider implements vscode.WebviewViewProvider {
 
 	// ----- private function ----- //
 
-	private _getLocalUrlArray(localFullPathArray: string[]) {
-		let localUrlArray = [];
+	private _getFsUrlArray(fsFullPathArray: string[]) {
+		let fsUrlArray = [];
 		if (this._view) {
-			for (let i = 0; i < localFullPathArray.length; i++) {
-				localUrlArray.push(this._view.webview.asWebviewUri(vscode.Uri.file(localFullPathArray[i])).toString());
+			for (let i = 0; i < fsFullPathArray.length; i++) {
+				fsUrlArray.push(this._view.webview.asWebviewUri(vscode.Uri.file(fsFullPathArray[i])).toString());
 			}
 		}
-		return localUrlArray;
+		return fsUrlArray;
 	}
 
-	private _getLocalDirectoryPathArray(localFullPathArray: string[]) {
-		let localDirectoryArray: string[] = [];
-		for (let i = 0; i < localFullPathArray.length; i++) {
-			localDirectoryArray.push(path.dirname(localFullPathArray[i]));
+	private _getFsDirectoryPathArray(fsFullPathArray: string[]) {
+		let fsDirectoryArray: string[] = [];
+		for (let i = 0; i < fsFullPathArray.length; i++) {
+			fsDirectoryArray.push(path.dirname(fsFullPathArray[i]));
 		}
-		return localDirectoryArray;
+		return fsDirectoryArray;
 	}
 
 	private _loadConfiguration() {
 		if (this._view) {
 			// Load configuration
 			this._imageWebUrlArray = vscode.workspace.getConfiguration().get('vione.view.imageWebUrlArray') || [""];
-			this._imageLocalFullPathArray = vscode.workspace.getConfiguration().get('vione.view.imageLocalFullPathArray') || [""];
 			this._transition_time = vscode.workspace.getConfiguration().get('vione.view.transitionTime') || 0;
 
+			if (this._env == "remote") {
+				this._imageFsFullPathArray = vscode.workspace.getConfiguration().get('vione.view.imageRemoteFullPathArray') || [""];
+			} else {
+				this._imageFsFullPathArray = vscode.workspace.getConfiguration().get('vione.view.imageLocalFullPathArray') || [""];
+			}
+			
 			// Compose webviewView.webview.options
-			const imageLocalDirectoryPathArray: string[] = this._getLocalDirectoryPathArray(this._imageLocalFullPathArray);
+			const imageFsDirectoryPathArray: string[] = this._getFsDirectoryPathArray(this._imageFsFullPathArray);
 			let localResourceRoots = [this._extensionUri];
-			for (let i = 0; i < imageLocalDirectoryPathArray.length; i++) {
-				localResourceRoots.push(vscode.Uri.file(imageLocalDirectoryPathArray[i]))
+			for (let i = 0; i < imageFsDirectoryPathArray.length; i++) {
+				localResourceRoots.push(vscode.Uri.file(imageFsDirectoryPathArray[i]))
 			}
 			this._view.webview.options = {
 				// Allow scripts in the webview
@@ -176,8 +189,8 @@ class ImagesViewProvider implements vscode.WebviewViewProvider {
 			};
 
 			// Compose imageUrlArray
-			this._imageLocalUrlArray = this._getLocalUrlArray(this._imageLocalFullPathArray);
-			this._imageUrlArray = this._imageWebUrlArray.concat(this._imageLocalUrlArray);
+			this._imageFsUrlArray = this._getFsUrlArray(this._imageFsFullPathArray);
+			this._imageUrlArray = this._imageWebUrlArray.concat(this._imageFsUrlArray);
 
 			// Start image
 			this._start_image = this._view.webview.asWebviewUri(vscode.Uri.joinPath(this._extensionUri, 'media', 'setting_example_edit.png')).toString();
