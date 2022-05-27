@@ -32,7 +32,7 @@
 				"properties": {
 					"vione.view.imageWebUrlArray": {
 						"type": "array",
-						"description": "Web URLs of images. (Example: https://example.com/image.png)",
+						"description": "Web URLs of images (ex: https://example.com/image.png).",
 						"items": {
 							"type": "string"
 						}
@@ -45,7 +45,20 @@
 				"properties": {
 					"vione.view.imageLocalFullPathArray": {
 						"type": "array",
-						"description": "Local full paths where image files are located. (Example: C:\\Users\\UserName\\Pictures\\image.png or /home/username/Pictures/image.png)",
+						"description": "Local full paths where image files are located (ex: C:\\Users\\UserName\\Pictures\\image.png or /home/username/Pictures/image.png). This field is valid only when using locally.",
+						"items": {
+							"type": "string"
+						}
+					}
+				}
+			},
+			{
+				"id": "imageRemoteFullPathArray",
+				"title": "Remote Full Paths of Images",
+				"properties": {
+					"vione.view.imageRemoteFullPathArray": {
+						"type": "array",
+						"description": "Remote full paths where image files are located (ex: /home/username/Pictures/image.png). This field is valid only when using Remote-SSH or Remote-WSL.",
 						"items": {
 							"type": "string"
 						}
