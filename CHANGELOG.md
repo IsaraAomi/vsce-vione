@@ -5,6 +5,8 @@ All notable changes to the "vsce-vione" extension will be documented in this fil
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
 
 ## [Released]
+- v0.0.16
+  - Separated the setting fields depending on whether loading is from local or remote.
 - v0.0.15
   - Updated `README.md`.
 - v0.0.14
