@@ -80,6 +80,7 @@
     function setSource(image) {
         // @ts-ignore
         elem.src = image;
+        // @ts-ignore
         elem.title = image;
         vscode.setState({ image: image });
     }
